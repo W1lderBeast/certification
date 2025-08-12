@@ -16,26 +16,52 @@ Nouveaux points vs 2.9.0:
   * Rapport HTML groupé par fichier (repliable), filtres, export CSV filtré
 ##>
 
+# Paramètres configurables (valeurs par défaut = comportement actuel)
+param(
+  [string]$FOLDER           = 'D:\Bitbucket\test_noe_global_standard_ref',
+  [string]$EXTENSIONS       = '*.xcce',                # ex: "*.xcce;*.xml"
+  [int]   $RETENTION_DAYS   = 30,
+  [string]$ZONES_SPEC       = 'GEN|### START_ZONE_A_SURVEILLER|### END_ZONE_A_SURVEILLER',  # "Nom|Start|End;..."
+  [ValidateSet('HEAD','START')]
+  [string]$LOCAL_BASE       = 'START',                 # 'HEAD' ou 'START'
+  [bool]  $DEBUG_ZONES      = $false,
+
+  # Hash / identifiants
+  [int]   $PATHHASH_HEXLEN  = 12,
+  [ValidateSet('ON','OFF')]
+  [string]$CONTENTHASH_MODE = 'ON',
+
+  # Fallback zones auto (<Step>/AUTO_FILE) ?
+  [ValidateSet('OFF','ON')]
+  [string]$AUTO_ZONES       = 'OFF',                   # 'OFF' = uniquement zones explicites. 'ON' pour activer les zones auto.
+
+  # Correspondance stricte des balises ?
+  # OFF = "contient le texte" (souple, par défaut) ; ON = ligne entière (ancrage ^ $)
+  [ValidateSet('OFF','ON')]
+  [string]$STRICT_MATCH     = 'OFF'                    # 'OFF' ou 'ON'
+)
+
 # =======================
 # 1) Configuration
 # =======================
-$FOLDER           = 'D:\Bitbucket\test_noe_global_standard_ref'
-$EXTENSIONS       = '*.xcce'                 # ex: "*.xcce;*.xml"
-$RETENTION_DAYS   = 30
-$ZONES_SPEC       = 'GEN|### START_ZONE_A_SURVEILLER|### END_ZONE_A_SURVEILLER'  # "Nom|Start|End;..."
-$LOCAL_BASE       = 'START'                  # 'HEAD' ou 'START'
-$DEBUG_ZONES      = $false
+# Les variables ci-dessus sont désormais fournies via le bloc param
+$FOLDER           = $FOLDER
+$EXTENSIONS       = $EXTENSIONS                 # ex: "*.xcce;*.xml"
+$RETENTION_DAYS   = $RETENTION_DAYS
+$ZONES_SPEC       = $ZONES_SPEC                  # "Nom|Start|End;..."
+$LOCAL_BASE       = $LOCAL_BASE                  # 'HEAD' ou 'START'
+$DEBUG_ZONES      = $DEBUG_ZONES
 
 # Hash / identifiants
-$PATHHASH_HEXLEN  = 12
-$CONTENTHASH_MODE = 'ON'                     # 'ON'/'OFF'
+$PATHHASH_HEXLEN  = $PATHHASH_HEXLEN
+$CONTENTHASH_MODE = $CONTENTHASH_MODE            # 'ON'/'OFF'
 
 # Fallback zones auto (<Step>/AUTO_FILE) ?
-$AUTO_ZONES       = 'OFF'                    # 'OFF' = uniquement zones explicites. 'ON' pour activer les zones auto.
+$AUTO_ZONES       = $AUTO_ZONES                  # 'OFF' = uniquement zones explicites. 'ON' pour activer les zones auto.
 
 # Correspondance stricte des balises ?
 # OFF = "contient le texte" (souple, par défaut) ; ON = ligne entière (ancrage ^ $)
-$STRICT_MATCH     = 'OFF'                    # 'OFF' ou 'ON'
+$STRICT_MATCH     = $STRICT_MATCH                # 'OFF' ou 'ON'
 
 # =======================
 # 2) Consoles/Encodages
